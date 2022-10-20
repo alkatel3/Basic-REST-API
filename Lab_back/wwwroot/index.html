@@ -11,26 +11,50 @@
         button {
             margin: 5px;
         }
+        div{
+            display:inline-block;
+        }
     </style>
 </head>
 <body>
-    <h2>Users List</h2>
     <div>
-        <input type="hidden" id="userId" />
-        <p>
-            Name:<br />
-            <input id="userName" />
-        </p>
-        <p>
-            <button id="saveBtn">Save</button>
-            <button id="resetBtn">Reset</button>
-        </p>
+        <h2>Users List</h2>
+        <div>
+            <input type="hidden" id="userId" />
+            <p>
+                Name:<br />
+                <input id="userName" />
+            </p>
+            <p>
+                <button id="saveUserBtn">Save</button>
+                <button id="resetUserBtn">Reset</button>
+            </p>
+        </div>
+        <table>
+            <thead><tr><th>Name</th><th></th></tr></thead>
+            <tbody id="users">
+            </tbody>
+        </table>
     </div>
-    <table>
-        <thead><tr><th>Name</th><th></th></tr></thead>
-        <tbody>
-        </tbody>
-    </table>
+    <div>
+        <h2>categories List</h2>
+        <div>
+            <input type="hidden" id="categoryId" />
+            <p>
+                Name:<br />
+                <input id="categoryName" />
+            </p>
+            <p>
+                <button id="saveCategoryBtn">Save</button>
+                <button id="resetCategoryBtn">Reset</button>
+            </p>
+        </div>
+        <table>
+            <thead><tr><th>Name</th><th></th></tr></thead>
+            <tbody id="categories">
+            </tbody>
+        </table>
+    </div>
 
     <script>
         async function getUsers() {
@@ -40,10 +64,23 @@
             });
             if (response.ok === true) {
                 const users = await response.json();
-                const rows = document.querySelector("tbody");
-                users.forEach(user => rows.append(row(user)));
+                const rows = document.getElementById("users");
+                users.forEach(user => rows.append(UserRow(user)));
             }
         }
+        async function getCategorys() {
+            const response = await fetch("/api/categories", {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            });
+            if (response.ok === true) {
+                const categories = await response.json();
+                const rows = document.getElementById("categories");
+                categories.forEach(category => rows.append(CategoryRow(category)));
+            }
+        }
+
+
         async function getUser(id) {
             const response = await fetch(`/api/users/${id}`, {
                 method: "GET",
@@ -59,6 +96,23 @@
                 console.log(error.message);
             }
         }
+        async function getCategory(id) {
+            const response = await fetch(`/api/categories/${id}`, {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            });
+            if (response.ok === true) {
+                const category = await response.json();
+                document.getElementById("categoryId").value = category.id;
+                document.getElementById("categoryName").value = category.name;
+            }
+            else {
+                const error = await response.json();
+                console.log(error.message);
+            }
+        }
+
+
         async function createUser(userName) {
 
             const response = await fetch("api/users", {
@@ -70,13 +124,32 @@
             });
             if (response.ok === true) {
                 const user = await response.json();
-                document.querySelector("tbody").append(row(user));
+                document.getElementById("users").append(UserRow(user));
             }
             else {
                 const error = await response.json();
                 console.log(error.message);
             }
         }
+        async function createCategory(categoryName) {
+
+            const response = await fetch("api/categories", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: categoryName
+                })
+            });
+            if (response.ok === true) {
+                const category = await response.json();
+                document.getElementById("categories").append(CategoryRow(category));
+            }
+            else {
+                const error = await response.json();
+                console.log(error.message);
+            }
+        }
+
         async function editUser(userId, userName) {
             const response = await fetch("api/users", {
                 method: "PUT",
@@ -88,13 +161,32 @@
             });
             if (response.ok === true) {
                 const user = await response.json();
-                document.querySelector(`tr[data-rowid='${user.id}']`).replaceWith(row(user));
+                document.querySelector(`tr[data-rowid='${user.id}']`).replaceWith(UserRow(user));
             }
             else {
                 const error = await response.json();
                 console.log(error.message);
             }
         }
+        async function editCategory(categoryId, categoryName) {
+            const response = await fetch("api/categories", {
+                method: "PUT",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    id: categoryId,
+                    name: categoryName
+                })
+            });
+            if (response.ok === true) {
+                const category = await response.json();
+                document.querySelector(`tr[data-rowid='${category.id}']`).replaceWith(CategoryRow(category));
+            }
+            else {
+                const error = await response.json();
+                console.log(error.message);
+            }
+        }
+
         async function deleteUser(id) {
             const response = await fetch(`/api/users/${id}`, {
                 method: "DELETE",
@@ -109,12 +201,31 @@
                 console.log(error.message);
             }
         }
-
-        function reset() {
-            document.getElementById("userId").value =
-            document.getElementById("userName").value = "";
+        async function deleteCategory(id) {
+            const response = await fetch(`/api/categories/${id}`, {
+                method: "DELETE",
+                headers: { "Accept": "application/json" }
+            });
+            if (response.ok === true) {
+                const category = await response.json();
+                document.querySelector(`tr[data-rowid='${category.id}']`).remove();
+            }
+            else {
+                const error = await response.json();
+                console.log(error.message);
+            }
         }
-        function row(user) {
+
+        function resetUser() {
+            document.getElementById("userId").value =
+                document.getElementById("userName").value = "";
+        }
+        function resetCategory() {
+            document.getElementById("categoryId").value =
+                document.getElementById("categoryName").value = "";
+        }
+
+        function UserRow(user) {
 
             const tr = document.createElement("tr");
             tr.setAttribute("data-rowid", user.id);
@@ -127,7 +238,7 @@
 
             const editLink = document.createElement("button");
             editLink.append("Change");
-            editLink.addEventListener("click", async() => await getUser(user.id));
+            editLink.addEventListener("click", async () => await getUser(user.id));
             linksTd.append(editLink);
 
             const removeLink = document.createElement("button");
@@ -139,9 +250,36 @@
 
             return tr;
         }
-        document.getElementById("resetBtn").addEventListener("click", () =>  reset());
+        function CategoryRow(category) {
 
-        document.getElementById("saveBtn").addEventListener("click", async () => {
+            const tr = document.createElement("tr");
+            tr.setAttribute("data-rowid", category.id);
+
+            const nameTd = document.createElement("td");
+            nameTd.append(category.name);
+            tr.append(nameTd);
+
+            const linksTd = document.createElement("td");
+
+            const editLink = document.createElement("button");
+            editLink.append("Change");
+            editLink.addEventListener("click", async () => await getCategory(category.id));
+            linksTd.append(editLink);
+
+            const removeLink = document.createElement("button");
+            removeLink.append("Delete");
+            removeLink.addEventListener("click", async () => await deleteCategory(category.id));
+
+            linksTd.append(removeLink);
+            tr.appendChild(linksTd);
+
+            return tr;
+        }
+
+        document.getElementById("resetUserBtn").addEventListener("click", () => resetUser());
+        document.getElementById("resetCategoryBtn").addEventListener("click", () => resetCategory());
+
+        document.getElementById("saveUserBtn").addEventListener("click", async () => {
 
             const id = document.getElementById("userId").value;
             const name = document.getElementById("userName").value;
@@ -149,10 +287,21 @@
                 await createUser(name);
             else
                 await editUser(id, name);
-            reset();
+            resetUser();
+        });
+        document.getElementById("saveCategoryBtn").addEventListener("click", async () => {
+
+            const id = document.getElementById("categoryId").value;
+            const name = document.getElementById("categoryName").value;
+            if (id === "")
+                await createCategory(name);
+            else
+                await editCategory(id, name);
+            resetCategory();
         });
 
         getUsers();
+        getCategorys();
     </script>
 </body>
 </html>
