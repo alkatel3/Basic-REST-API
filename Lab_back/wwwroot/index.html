@@ -11,70 +11,89 @@
         button {
             margin: 5px;
         }
+        /*
         div{
             display:inline-block;
             vertical-align:top;
             margin-right:100px;
-            
+
+        }*/
+        .InlineDiv {
+            display: inline-block;
+            margin-right: 50px;
         }
     </style>
 </head>
 <body>
-    <div>
-        <h2>Creat or change record</h2>
-        <h4>Users List</h4>
-        <table>
-            <thead><tr><th></th><th>Name</th><th></th></tr></thead>
-            <tbody id="users">
-            </tbody>
-        </table>
-        <h4>Categories List</h4>
-        <table>
-            <thead><tr><th></th><th>Name</th><th></th></tr></thead>
-            <tbody id="categories">
-            </tbody>
-        </table>
-        <input type="hidden" id="recordId" />
-        <p>
-            Sum:<br />
-            <input type="number" id="dataSum" />
-        </p>
-        <p>
-            <button id="saveRecordBtn">Save</button>
-            <button id="resetRecordBtn">Reset</button>
-        </p>
-        <h4>Records List</h4>
-        <table>
-            <thead><tr><th></th><th>DateTime</th><th>Sum</th><th>User</th><th>Category</th><th></th></tr></thead>
-            <tbody id="records">
-            </tbody>
-        </table>
-    </div>
-    <div>
+    <div class="InlineDiv">
         <h2>Creat or change user</h2>
-        <input type="hidden" id="userId" />
         <p>
             Name:<br />
             <input id="userName" />
         </p>
         <p>
             <button id="saveUserBtn">Save</button>
-            <button id="resetUserBtn">Reset</button>
         </p>
     </div>
-    <div>
+    <div class="InlineDiv">
         <h2>Creat or change category</h2>
-        <input type="hidden" id="categoryId" />
         <p>
             Name:<br />
             <input id="categoryName" />
         </p>
         <p>
             <button id="saveCategoryBtn">Save</button>
-            <button id="resetCategoryBtn">Reset</button>
         </p>
     </div>
-
+    <div>
+        <h2>Creat or change record</h2>
+        <div class="InlineDiv">
+            <h4>Users List</h4>
+            <table>
+                <thead><tr><th></th><th>Name</th><th></th></tr></thead>
+                <tbody id="users">
+                </tbody>
+            </table>
+        </div>
+        <div class="InlineDiv">
+            <h4>Categories List</h4>
+            <table>
+                <thead><tr><th></th><th>Name</th><th></th></tr></thead>
+                <tbody id="categories">
+                </tbody>
+            </table>
+        </div>
+        <p>
+            Sum:<br />
+            <input type="number" id="dataSum" />
+        </p>
+        <p>
+            <button id="saveRecordBtn">Save</button>
+        </p>
+        <h4>Records List</h4>
+        <table>
+            <thead><tr><th>DateTime</th><th>Sum</th><th>User</th><th>Category</th><th></th></tr></thead>
+            <tbody id="records">
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <h2>Get record list by user</h2>
+        <div class="InlineDiv">
+            <h4>Users List</h4>
+            <table>
+                <thead><tr><th></th><th>Name</th><th></th></tr></thead>
+                <tbody id="users2">
+                </tbody>
+            </table>
+        </div>
+        <p>
+            <button id="GetRecordBtn">Get list</button>
+        </p>
+        <h4>Records List</h4>
+        <div id="divForTable">
+        </div>
+    </div>
     <script>
         async function getUsers() {
             const response = await fetch("/api/users", {
@@ -84,7 +103,11 @@
             if (response.ok === true) {
                 const users = await response.json();
                 const rows = document.getElementById("users");
-                users.forEach(user => rows.append(UserRow(user)));
+                const rows2 = document.getElementById("users2");
+                users.forEach(user => {
+                    rows.append(UserRow(user, "users1"));
+                    rows2.append(UserRow(user, "users2"));
+                });
             }
         }
         async function getCategorys() {
@@ -110,45 +133,15 @@
             }
         }
 
-        async function getUser(id) {
-            const response = await fetch(`/api/users/${id}`, {
+        async function GetRecordByUser(UseriId) {
+            const response = await fetch(`/api/users/${UseriId}`, {
                 method: "GET",
                 headers: { "Accept": "application/json" }
             });
             if (response.ok === true) {
-                const user = await response.json();
-                document.getElementById("userId").value = user.id;
-                document.getElementById("userName").value = user.name;
-            }
-            else {
-                const error = await response.json();
-                console.log(error.message);
-            }
-        }
-        async function getCategory(id) {
-            const response = await fetch(`/api/categories/${id}`, {
-                method: "GET",
-                headers: { "Accept": "application/json" }
-            });
-            if (response.ok === true) {
-                const category = await response.json();
-                document.getElementById("categoryId").value = category.id;
-                document.getElementById("categoryName").value = category.name;
-            }
-            else {
-                const error = await response.json();
-                console.log(error.message);
-            }
-        }
-        async function getRecord(id) {
-            const response = await fetch(`/api/records/${id}`, {
-                method: "GET",
-                headers: { "Accept": "application/json" }
-            });
-            if (response.ok === true) {
-                const record = await response.json();
-                document.getElementById("dataSum").value = record.sum;
-                document.getElementById("recordId").value = record.id;
+                const records = await response.json();
+                const rows = document.getElementById("records2");
+                records.forEach(record => rows.append(RecordRow(record)));
             }
             else {
                 const error = await response.json();
@@ -167,7 +160,8 @@
             });
             if (response.ok === true) {
                 const user = await response.json();
-                document.getElementById("users").append(UserRow(user));
+                document.getElementById("users").append(UserRow(user, "users1"));
+                document.getElementById("users2").append(UserRow(user, "users2"));
             }
             else {
                 const error = await response.json();
@@ -213,120 +207,7 @@
             }
         }
 
-        async function editUser(userId, userName) {
-            const response = await fetch("api/users", {
-                method: "PUT",
-                headers: { "Accept": "application/json", "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    id: userId,
-                    name: userName
-                })
-            });
-            if (response.ok === true) {
-                const user = await response.json();
-                document.querySelector(`tr[data-rowid='${user.id}']`).replaceWith(UserRow(user));
-            }
-            else {
-                const error = await response.json();
-                console.log(error.message);
-            }
-        }
-        async function editCategory(categoryId, categoryName) {
-            const response = await fetch("api/categories", {
-                method: "PUT",
-                headers: { "Accept": "application/json", "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    id: categoryId,
-                    name: categoryName
-                })
-            });
-            if (response.ok === true) {
-                const category = await response.json();
-                document.querySelector(`tr[data-rowid='${category.id}']`).replaceWith(CategoryRow(category));
-            }
-            else {
-                const error = await response.json();
-                console.log(error.message);
-            }
-        }
-        async function editRecord(recordId, recordSum, userId, categoryId) {
-            const response = await fetch("api/records", {
-                method: "PUT",
-                headers: { "Accept": "application/json", "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    id: recordId,
-                    sum: recordSum,
-                    userId: userId,
-                    categoryId: categoryId
-                })
-            });
-            if (response.ok === true) {
-                const record = await response.json();
-                document.querySelector(`tr[data-rowid='${record.id}']`).replaceWith(RecordRow(record));
-            }
-            else {
-                const error = await response.json();
-                console.log(error.message);
-            }
-        }
-
-        async function deleteUser(id) {
-            const response = await fetch(`/api/users/${id}`, {
-                method: "DELETE",
-                headers: { "Accept": "application/json" }
-            });
-            if (response.ok === true) {
-                const user = await response.json();
-                document.querySelector(`tr[data-rowid='${user.id}']`).remove();
-            }
-            else {
-                const error = await response.json();
-                console.log(error.message);
-            }
-        }
-        async function deleteCategory(id) {
-            const response = await fetch(`/api/categories/${id}`, {
-                method: "DELETE",
-                headers: { "Accept": "application/json" }
-            });
-            if (response.ok === true) {
-                const category = await response.json();
-                document.querySelector(`tr[data-rowid='${category.id}']`).remove();
-            }
-            else {
-                const error = await response.json();
-                console.log(error.message);
-            }
-        }
-        async function deleteRecord(id) {
-            const response = await fetch(`/api/records/${id}`, {
-                method: "DELETE",
-                headers: { "Accept": "application/json" }
-            });
-            if (response.ok === true) {
-                const record = await response.json();
-                document.querySelector(`tr[data-rowid='${record.id}']`).remove();
-            }
-            else {
-                const error = await response.json();
-                console.log(error.message);
-            }
-        }
-
-        function resetUser() {
-            document.getElementById("userId").value =
-                document.getElementById("userName").value = "";
-        }
-        function resetCategory() {
-            document.getElementById("categoryId").value =
-                document.getElementById("categoryName").value = "";
-        }
-        function resetRecord() {
-            document.getElementById("dataSum").value =
-                document.getElementById("recordId").value = "";
-        }
-
-        function UserRow(user) {
+        function UserRow(user, groupName) {
 
             const tr = document.createElement("tr");
             tr.setAttribute("data-rowid", user.id);
@@ -335,28 +216,13 @@
             const radioLink = document.createElement("input");
             radioLink.type = "radio";
             radioLink.value = user.id;
-            radioLink.name = "users";
-            radioLink.checked = true;
+            radioLink.name = groupName;
             checkTd.append(radioLink);
             tr.append(checkTd);
 
             const nameTd = document.createElement("td");
             nameTd.append(user.name);
             tr.append(nameTd);
-
-            const linksTd = document.createElement("td");
-
-            const editLink = document.createElement("button");
-            editLink.append("Change");
-            editLink.addEventListener("click", async () => await getUser(user.id));
-            linksTd.append(editLink);
-
-            const removeLink = document.createElement("button");
-            removeLink.append("Delete");
-            removeLink.addEventListener("click", async () => await deleteUser(user.id));
-
-            linksTd.append(removeLink);
-            tr.appendChild(linksTd);
 
             return tr;
         }
@@ -370,7 +236,6 @@
             radioLink.type = "radio";
             radioLink.value = category.id;
             radioLink.name = "categorys";
-            radioLink.checked = true;
             checkTd.append(radioLink);
             tr.append(checkTd);
 
@@ -378,35 +243,12 @@
             nameTd.append(category.name);
             tr.append(nameTd);
 
-            const linksTd = document.createElement("td");
-
-            const editLink = document.createElement("button");
-            editLink.append("Change");
-            editLink.addEventListener("click", async () => await getCategory(category.id));
-            linksTd.append(editLink);
-
-            const removeLink = document.createElement("button");
-            removeLink.append("Delete");
-            removeLink.addEventListener("click", async () => await deleteCategory(category.id));
-
-            linksTd.append(removeLink);
-            tr.appendChild(linksTd);
-
             return tr;
         }
         function RecordRow(record) {
 
             const tr = document.createElement("tr");
             tr.setAttribute("data-rowid", record.id);
-
-            const checkTd = document.createElement("td");
-            const radioLink = document.createElement("input");
-            radioLink.type = "radio";
-            radioLink.value = record.id;
-            radioLink.name = "records";
-            radioLink.checked = true;
-            checkTd.append(radioLink);
-            tr.append(checkTd);
 
             const timeTd = document.createElement("td");
             timeTd.append(record.created);
@@ -424,56 +266,68 @@
             CategoryTd.append(record.categoryId);
             tr.append(CategoryTd);
 
-            const linksTd = document.createElement("td");
-            const editLink = document.createElement("button");
-            editLink.append("Change");
-            editLink.addEventListener("click", async () => await getRecord(record.id));
-            linksTd.append(editLink);
-            const removeLink = document.createElement("button");
-            removeLink.append("Delete");
-            removeLink.addEventListener("click", async () => await deleteRecord(record.id));
-            linksTd.append(removeLink);
-
-            tr.appendChild(linksTd);
-
             return tr;
         }
 
-        document.getElementById("resetUserBtn").addEventListener("click", () => resetUser());
-        document.getElementById("resetCategoryBtn").addEventListener("click", () => resetCategory());
-        document.getElementById("resetRecordBtn").addEventListener("click", () => resetRecord());
-
         document.getElementById("saveUserBtn").addEventListener("click", async () => {
 
-            const id = document.getElementById("userId").value;
             const name = document.getElementById("userName").value;
-            if (id === "")
-                await createUser(name);
-            else
-                await editUser(id, name);
-            resetUser();
+            await createUser(name);
+            document.getElementById("userName").value = "";
         });
         document.getElementById("saveCategoryBtn").addEventListener("click", async () => {
 
-            const id = document.getElementById("categoryId").value;
             const name = document.getElementById("categoryName").value;
-            if (id === "")
-                await createCategory(name);
-            else
-                await editCategory(id, name);
-            resetCategory();
+            await createCategory(name);
+            document.getElementById("categoryName").value = "";
         });
         document.getElementById("saveRecordBtn").addEventListener("click", async () => {
 
-            const id = document.getElementById("recordId").value;
             const sum = document.getElementById("dataSum").value;
-            const userId = document.querySelector('input[name="users"]:checked').value;
-            const categoryId = document.querySelector('input[name="categorys"]:checked').value;
-            if (id === "")
-                await createRecord(sum, userId, categoryId);
-            else
-                await editRecord(id, sum, userId, categoryId);
-            resetRecord();
+            const userId = document.querySelector('input[name="users1"]:checked');
+            const categoryId = document.querySelector('input[name="categorys"]:checked');
+            if (userId != null && categoryId != null) {
+                await createRecord(sum, userId.value, categoryId.value);
+                document.getElementById("dataSum").value = "";
+            }
+        });
+
+        document.getElementById("GetRecordBtn").addEventListener("click", async () => {
+
+            document.getElementById("rectab").remove();
+
+            const div = document.getElementById("divForTable");
+            const table = document.createElement("table");
+            table.id = "rectab"
+            const thead = document.createElement("thead");
+            const tr = document.createElement("tr");
+            const dataTimeTd = document.createElement("td");
+            dataTimeTd.append("DateTime");
+            tr.append(dataTimeTd);
+            const sumTd = document.createElement("td");
+            sumTd.append("Sum");
+            tr.append(sumTd);
+            const userTd = document.createElement("td");
+            userTd.append("User");
+            tr.append(userTd);
+            const CategoryTd = document.createElement("td");
+            CategoryTd.append("Category");
+            tr.append(CategoryTd);
+            const EmptyTd = document.createElement("td");
+            tr.append(EmptyTd);
+            thead.append(tr);
+            table.append(thead)
+
+            const tbody = document.createElement("tbody");
+            tbody.id = "records2";
+            table.append(tbody)
+            table.id="rectab"
+            div.append(table);
+
+            const userId = document.querySelector('input[name="users2"]:checked');
+            if (userId != null) {
+                await GetRecordByUser(userId.value);
+            }
         });
 
         getUsers();
@@ -482,3 +336,9 @@
     </script>
 </body>
 </html>
+
+<table id="rectab">
+    <thead><tr><th>DateTime</th><th>Sum</th><th>User</th><th>Category</th><th></th></tr></thead>
+    <tbody id="records2">
+    </tbody>
+</table>
