@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "A3HxbsGI/aIS0YkvI90dh4JIpf+cuKxs6wEtlRNRm2k=",
+  "Hash": "U7tCi8vGd6Yi3jFrX5G1Joa9/jsu4M0VL4Q9U0UZlpI=",
   "Source": "Lab_back",
   "BasePath": "_content/Lab_back",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "Lab_back\\wwwroot",
       "Source": "Lab_back",
-      "ContentRoot": "C:\\Users\\Dell\\OneDrive\\Рабочий стол\\Studying\\Back-end\\Lab_back\\Lab_back\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Dell\\source\\repos\\Lab_back\\wwwroot\\",
       "BasePath": "_content/Lab_back",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\Dell\\OneDrive\\Рабочий стол\\Studying\\Back-end\\Lab_back\\Lab_back\\wwwroot\\index.html",
+      "Identity": "C:\\Users\\Dell\\source\\repos\\Lab_back\\wwwroot\\index.html",
       "SourceId": "Lab_back",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Dell\\OneDrive\\Рабочий стол\\Studying\\Back-end\\Lab_back\\Lab_back\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Dell\\source\\repos\\Lab_back\\wwwroot\\",
       "BasePath": "_content/Lab_back",
       "RelativePath": "index.html",
       "AssetKind": "All",

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Dell\\OneDrive\\Рабочий стол\\Studying\\Back-end\\Lab_back\\Lab_back\\Lab_back.csproj": {}
+    "C:\\Users\\Dell\\source\\repos\\Lab_back\\Lab_back.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Dell\\OneDrive\\Рабочий стол\\Studying\\Back-end\\Lab_back\\Lab_back\\Lab_back.csproj": {
+    "C:\\Users\\Dell\\source\\repos\\Lab_back\\Lab_back.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dell\\OneDrive\\Рабочий стол\\Studying\\Back-end\\Lab_back\\Lab_back\\Lab_back.csproj",
+        "projectUniqueName": "C:\\Users\\Dell\\source\\repos\\Lab_back\\Lab_back.csproj",
         "projectName": "Lab_back",
-        "projectPath": "C:\\Users\\Dell\\OneDrive\\Рабочий стол\\Studying\\Back-end\\Lab_back\\Lab_back\\Lab_back.csproj",
+        "projectPath": "C:\\Users\\Dell\\source\\repos\\Lab_back\\Lab_back.csproj",
         "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dell\\OneDrive\\Рабочий стол\\Studying\\Back-end\\Lab_back\\Lab_back\\obj\\",
+        "outputPath": "C:\\Users\\Dell\\source\\repos\\Lab_back\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

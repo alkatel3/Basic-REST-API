@@ -24,19 +24,19 @@
         <h2>Creat or change record</h2>
         <h4>Users List</h4>
         <table>
-            <thead><tr><th>Name</th><th></th></tr></thead>
+            <thead><tr><th></th><th>Name</th><th></th></tr></thead>
             <tbody id="users">
             </tbody>
         </table>
         <h4>Categories List</h4>
         <table>
-            <thead><tr><th>Name</th><th></th></tr></thead>
+            <thead><tr><th></th><th>Name</th><th></th></tr></thead>
             <tbody id="categories">
             </tbody>
         </table>
         <input type="hidden" id="recordId" />
         <!--<input type="hidden" id="categoryIdRecord" />
-        <input type="hidden" id="userIdRecord" />-->
+    <input type="hidden" id="userIdRecord" />-->
         <p>
             Time of created:<br />
             <input type="datetime-local" id="datetime" />
@@ -45,6 +45,12 @@
             Sum:<br />
             <input type="number" id="sum" />
         </p>
+        <h4>Records List</h4>
+        <table>
+            <thead><tr><th></th><th>DateTime</th><th>Sum</th><th>User</th><th>Category</th><th></th></tr></thead>
+            <tbody id="records">
+            </tbody>
+        </table>
     </div>
     <div>
         <h2>Creat or change user</h2>
@@ -94,7 +100,17 @@
                 categories.forEach(category => rows.append(CategoryRow(category)));
             }
         }
-
+        async function getRecords() {
+            const response = await fetch("/api/records", {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            });
+            if (response.ok === true) {
+                const records = await response.json();
+                const rows = document.getElementById("records");
+                records.forEach(record => rows.append(RecordRow(record)));
+            }
+        }
 
         async function getUser(id) {
             const response = await fetch(`/api/users/${id}`, {
@@ -126,7 +142,6 @@
                 console.log(error.message);
             }
         }
-
 
         async function createUser(userName) {
 
@@ -306,6 +321,49 @@
 
             return tr;
         }
+        function RecordRow(record) {
+
+            const tr = document.createElement("tr");
+            tr.setAttribute("data-rowid", record.id);
+
+            const checkTd = document.createElement("td");
+            const radioLink = document.createElement("input");
+            radioLink.type = "radio";
+            radioLink.value = record.id;
+            radioLink.name = "records";
+            checkTd.append(radioLink);
+            tr.append(checkTd);
+
+            const timeTd = document.createElement("td");
+            timeTd.append(record.created);
+            tr.append(timeTd);
+
+            const sumTd = document.createElement("td");
+            sumTd.append(record.sum);
+            tr.append(sumTd);
+
+            const UserTd = document.createElement("td");
+            UserTd.append(record.userId);
+            tr.append(UserTd);
+
+            const CategoryTd = document.createElement("td");
+            CategoryTd.append(record.categoryId);
+            tr.append(CategoryTd);
+
+            const linksTd = document.createElement("td");
+            const editLink = document.createElement("button");
+            editLink.append("Change");
+            //editLink.addEventListener("click", async () => await getCategory(category.id));
+            linksTd.append(editLink);
+            const removeLink = document.createElement("button");
+            removeLink.append("Delete");
+            //removeLink.addEventListener("click", async () => await deleteCategory(category.id));
+            linksTd.append(removeLink);
+
+            tr.appendChild(linksTd);
+
+            return tr;
+        }
 
         document.getElementById("resetUserBtn").addEventListener("click", () => resetUser());
         document.getElementById("resetCategoryBtn").addEventListener("click", () => resetCategory());
@@ -333,6 +391,7 @@
 
         getUsers();
         getCategorys();
+        getRecords();
     </script>
 </body>
 </html>

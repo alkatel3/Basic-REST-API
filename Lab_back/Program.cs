@@ -18,11 +18,11 @@ List<Category> categories = new List<Category>
 List<Record> records = new List<Record>
 {
     new() { Id = Guid.NewGuid().ToString(), UserId=Guid.NewGuid().ToString(), CategoryId=Guid.NewGuid().ToString(), 
-        Created=DateTime.Now.AddDays(-30), Sum=12.135 },
+        Created=new DateTime(2022,10,12,12,13,25), Sum=12.135 },
     new() { Id = Guid.NewGuid().ToString(), UserId=Guid.NewGuid().ToString(), CategoryId=Guid.NewGuid().ToString(), 
-        Created=DateTime.Now.AddMonths(-2), Sum=1442.15  },
+        Created=new DateTime(2021,4,21,14,23,34), Sum=1442.15  },
     new() { Id = Guid.NewGuid().ToString(), UserId=Guid.NewGuid().ToString(), CategoryId=Guid.NewGuid().ToString(), 
-        Created=DateTime.Now.AddYears(-1), Sum=1244.45  }
+        Created=new DateTime(2022,1,19,18,4,5), Sum=1244.45  }
 };
 
 
