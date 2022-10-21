@@ -15,6 +15,18 @@ List<Category> categories = new List<Category>
     new() { Id = Guid.NewGuid().ToString(), Name = "Snacks" }
 };
 
+List<Record> records = new List<Record>
+{
+    new() { Id = Guid.NewGuid().ToString(), UserId=Guid.NewGuid().ToString(), CategoryId=Guid.NewGuid().ToString(), 
+        Created=DateTime.Now.AddDays(-30), Sum=12.135 },
+    new() { Id = Guid.NewGuid().ToString(), UserId=Guid.NewGuid().ToString(), CategoryId=Guid.NewGuid().ToString(), 
+        Created=DateTime.Now.AddMonths(-2), Sum=1442.15  },
+    new() { Id = Guid.NewGuid().ToString(), UserId=Guid.NewGuid().ToString(), CategoryId=Guid.NewGuid().ToString(), 
+        Created=DateTime.Now.AddYears(-1), Sum=1244.45  }
+};
+
+
+
 var builder = WebApplication.CreateBuilder();
 var app = builder.Build();
 
@@ -23,6 +35,7 @@ app.UseStaticFiles();
 
 app.MapGet("/api/users", () => users);
 app.MapGet("/api/categories", () => categories);
+app.MapGet("/api/records", () => records);
 
 app.MapGet("/api/users/{id}", (string id) =>
 {
@@ -34,9 +47,16 @@ app.MapGet("/api/users/{id}", (string id) =>
 app.MapGet("/api/categories/{id}", (string id) =>
 {
     Category? category = categories.FirstOrDefault(c => c.Id == id);
-    if (category == null) return Results.NotFound(new { message = "User didn't find" });
+    if (category == null) return Results.NotFound(new { message = "Category didn't find" });
 
     return Results.Json(category);
+});
+app.MapGet("/api/records/{id}", (string id) =>
+{
+    Record? record = records.FirstOrDefault(c => c.Id == id);
+    if (record == null) return Results.NotFound(new { message = "Record didn't find" });
+
+    return Results.Json(record);
 });
 
 app.MapDelete("/api/users/{id}", (string id) =>
@@ -57,6 +77,15 @@ app.MapDelete("/api/categories/{id}", (string id) =>
     categories.Remove(category);
     return Results.Json(category);
 });
+app.MapDelete("/api/records/{id}", (string id) =>
+{
+    Record? record = records.FirstOrDefault(u => u.Id == id);
+
+    if (record == null) return Results.NotFound(new { message = "Record didn't find" });
+
+    records.Remove(record);
+    return Results.Json(record);
+});
 
 
 app.MapPost("/api/users", (User user) => {
@@ -70,6 +99,12 @@ app.MapPost("/api/categories", (Category category) => {
     category.Id = Guid.NewGuid().ToString();
     categories.Add(category);
     return category;
+});
+app.MapPost("/api/records", (Record record) => {
+
+    record.Id = Guid.NewGuid().ToString();
+    records.Add(record);
+    return record;
 });
 
 app.MapPut("/api/users", (User userData) => {
@@ -87,6 +122,15 @@ app.MapPut("/api/categories", (Category categoryData) => {
 
     category.Name = categoryData.Name;
     return Results.Json(category);
+});
+app.MapPut("/api/records", (Record recordData) => {
+
+    var record = records.FirstOrDefault(u => u.Id == recordData.Id);
+    if (record == null) return Results.NotFound(new { message = "Record didn't find" });
+
+    record.Created = recordData.Created;
+    record.Sum = recordData.Sum;
+    return Results.Json(record);
 });
 
 app.Run();

@@ -13,47 +13,62 @@
         }
         div{
             display:inline-block;
+            vertical-align:top;
+            margin-right:100px;
+            
         }
     </style>
 </head>
 <body>
     <div>
-        <h2>Users List</h2>
-        <div>
-            <input type="hidden" id="userId" />
-            <p>
-                Name:<br />
-                <input id="userName" />
-            </p>
-            <p>
-                <button id="saveUserBtn">Save</button>
-                <button id="resetUserBtn">Reset</button>
-            </p>
-        </div>
+        <h2>Creat or change record</h2>
+        <h4>Users List</h4>
         <table>
             <thead><tr><th>Name</th><th></th></tr></thead>
             <tbody id="users">
             </tbody>
         </table>
-    </div>
-    <div>
-        <h2>categories List</h2>
-        <div>
-            <input type="hidden" id="categoryId" />
-            <p>
-                Name:<br />
-                <input id="categoryName" />
-            </p>
-            <p>
-                <button id="saveCategoryBtn">Save</button>
-                <button id="resetCategoryBtn">Reset</button>
-            </p>
-        </div>
+        <h4>Categories List</h4>
         <table>
             <thead><tr><th>Name</th><th></th></tr></thead>
             <tbody id="categories">
             </tbody>
         </table>
+        <input type="hidden" id="recordId" />
+        <!--<input type="hidden" id="categoryIdRecord" />
+        <input type="hidden" id="userIdRecord" />-->
+        <p>
+            Time of created:<br />
+            <input type="datetime-local" id="datetime" />
+        </p>
+        <p>
+            Sum:<br />
+            <input type="number" id="sum" />
+        </p>
+    </div>
+    <div>
+        <h2>Creat or change user</h2>
+        <input type="hidden" id="userId" />
+        <p>
+            Name:<br />
+            <input id="userName" />
+        </p>
+        <p>
+            <button id="saveUserBtn">Save</button>
+            <button id="resetUserBtn">Reset</button>
+        </p>
+    </div>
+    <div>
+        <h2>Creat or change category</h2>
+        <input type="hidden" id="categoryId" />
+        <p>
+            Name:<br />
+            <input id="categoryName" />
+        </p>
+        <p>
+            <button id="saveCategoryBtn">Save</button>
+            <button id="resetCategoryBtn">Reset</button>
+        </p>
     </div>
 
     <script>
@@ -230,6 +245,14 @@
             const tr = document.createElement("tr");
             tr.setAttribute("data-rowid", user.id);
 
+            const checkTd = document.createElement("td");
+            const radioLink = document.createElement("input");
+            radioLink.type = "radio";
+            radioLink.value = user.id;
+            radioLink.name = "users";
+            checkTd.append(radioLink);
+            tr.append(checkTd);
+
             const nameTd = document.createElement("td");
             nameTd.append(user.name);
             tr.append(nameTd);
@@ -254,6 +277,14 @@
 
             const tr = document.createElement("tr");
             tr.setAttribute("data-rowid", category.id);
+
+            const checkTd = document.createElement("td");
+            const radioLink = document.createElement("input");
+            radioLink.type = "radio";
+            radioLink.value = category.id;
+            radioLink.name = "categorys";
+            checkTd.append(radioLink);
+            tr.append(checkTd);
 
             const nameTd = document.createElement("td");
             nameTd.append(category.name);
