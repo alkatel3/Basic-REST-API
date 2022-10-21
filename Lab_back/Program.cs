@@ -3,25 +3,25 @@ using Lab_back.Entities;
 
 List<User> users = new List<User>
 {
-    new() { Id = Guid.NewGuid().ToString(), Name = "Tom" },
-    new() { Id = Guid.NewGuid().ToString(), Name = "Bob" },
-    new() { Id = Guid.NewGuid().ToString(), Name = "Sam" }
+    new() { Id = "A", Name = "Tom" },
+    new() { Id = "B", Name = "Bob" },
+    new() { Id = "C", Name = "Sam" }
 };
 
 List<Category> categories = new List<Category>
 {
-    new() { Id = Guid.NewGuid().ToString(), Name = "Fruits" },
-    new() { Id = Guid.NewGuid().ToString(), Name = "Cars" },
-    new() { Id = Guid.NewGuid().ToString(), Name = "Snacks" }
+    new() { Id = "a", Name = "Fruits" },
+    new() { Id = "b", Name = "Cars" },
+    new() { Id = "c", Name = "Snacks" }
 };
 
 List<Record> records = new List<Record>
 {
-    new() { Id = Guid.NewGuid().ToString(), UserId=Guid.NewGuid().ToString(), CategoryId=Guid.NewGuid().ToString(), 
-        Created=new DateTime(2022,10,12,12,13,25), Sum=12.135 },
-    new() { Id = Guid.NewGuid().ToString(), UserId=Guid.NewGuid().ToString(), CategoryId=Guid.NewGuid().ToString(), 
+    new() { Id = Guid.NewGuid().ToString(), UserId="C", CategoryId="a", 
+        Created=new DateTime(2022,10,12,12,13,00), Sum=12.13 },
+    new() { Id = Guid.NewGuid().ToString(), UserId="B", CategoryId="b", 
         Created=new DateTime(2021,4,21,14,23,34), Sum=1442.15  },
-    new() { Id = Guid.NewGuid().ToString(), UserId=Guid.NewGuid().ToString(), CategoryId=Guid.NewGuid().ToString(), 
+    new() { Id = Guid.NewGuid().ToString(), UserId="A", CategoryId="c", 
         Created=new DateTime(2022,1,19,18,4,5), Sum=1244.45  }
 };
 
@@ -39,7 +39,7 @@ app.MapGet("/api/records", () => records);
 
 app.MapGet("/api/users/{id}", (string id) =>
 {
-    User? user = users.FirstOrDefault(u => u.Id == id);
+    User? user = users.FirstOrDefault(u => u.Id.Equals(id));
     if (user == null) return Results.NotFound(new { message = "User didn't find" });
 
     return Results.Json(user);
