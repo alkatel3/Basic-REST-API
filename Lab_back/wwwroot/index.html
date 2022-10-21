@@ -35,15 +35,13 @@
             </tbody>
         </table>
         <input type="hidden" id="recordId" />
-        <!--<input type="hidden" id="categoryIdRecord" />
-    <input type="hidden" id="userIdRecord" />-->
-        <p>
-            Time of created:<br />
-            <input type="datetime-local" value="2017-06-01T08:30" id="datetime" />
-        </p>
         <p>
             Sum:<br />
-            <input type="number" id="sum" />
+            <input type="number" id="dataSum" />
+        </p>
+        <p>
+            <button id="saveRecordBtn">Save</button>
+            <button id="resetRecordBtn">Reset</button>
         </p>
         <h4>Records List</h4>
         <table>
@@ -149,8 +147,8 @@
             });
             if (response.ok === true) {
                 const record = await response.json();
-                document.getElementById("datetime").value = record.created;
-                document.getElementById("sum").value = record.sum;
+                document.getElementById("dataSum").value = record.sum;
+                document.getElementById("recordId").value = record.id;
             }
             else {
                 const error = await response.json();
@@ -194,6 +192,26 @@
                 console.log(error.message);
             }
         }
+        async function createRecord(recordSum, userId, categoryId) {
+
+            const response = await fetch("api/records", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    sum: recordSum,
+                    userId: userId,
+                    categoryId: categoryId
+                })
+            });
+            if (response.ok === true) {
+                const record = await response.json();
+                document.getElementById("records").append(RecordRow(record));
+            }
+            else {
+                const error = await response.json();
+                console.log(error.message);
+            }
+        }
 
         async function editUser(userId, userName) {
             const response = await fetch("api/users", {
@@ -225,6 +243,26 @@
             if (response.ok === true) {
                 const category = await response.json();
                 document.querySelector(`tr[data-rowid='${category.id}']`).replaceWith(CategoryRow(category));
+            }
+            else {
+                const error = await response.json();
+                console.log(error.message);
+            }
+        }
+        async function editRecord(recordId, recordSum, userId, categoryId) {
+            const response = await fetch("api/records", {
+                method: "PUT",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    id: recordId,
+                    sum: recordSum,
+                    userId: userId,
+                    categoryId: categoryId
+                })
+            });
+            if (response.ok === true) {
+                const record = await response.json();
+                document.querySelector(`tr[data-rowid='${record.id}']`).replaceWith(RecordRow(record));
             }
             else {
                 const error = await response.json();
@@ -283,6 +321,10 @@
             document.getElementById("categoryId").value =
                 document.getElementById("categoryName").value = "";
         }
+        function resetRecord() {
+            document.getElementById("dataSum").value =
+                document.getElementById("recordId").value = "";
+        }
 
         function UserRow(user) {
 
@@ -294,6 +336,7 @@
             radioLink.type = "radio";
             radioLink.value = user.id;
             radioLink.name = "users";
+            radioLink.checked = true;
             checkTd.append(radioLink);
             tr.append(checkTd);
 
@@ -327,6 +370,7 @@
             radioLink.type = "radio";
             radioLink.value = category.id;
             radioLink.name = "categorys";
+            radioLink.checked = true;
             checkTd.append(radioLink);
             tr.append(checkTd);
 
@@ -360,6 +404,7 @@
             radioLink.type = "radio";
             radioLink.value = record.id;
             radioLink.name = "records";
+            radioLink.checked = true;
             checkTd.append(radioLink);
             tr.append(checkTd);
 
@@ -396,6 +441,7 @@
 
         document.getElementById("resetUserBtn").addEventListener("click", () => resetUser());
         document.getElementById("resetCategoryBtn").addEventListener("click", () => resetCategory());
+        document.getElementById("resetRecordBtn").addEventListener("click", () => resetRecord());
 
         document.getElementById("saveUserBtn").addEventListener("click", async () => {
 
@@ -416,6 +462,18 @@
             else
                 await editCategory(id, name);
             resetCategory();
+        });
+        document.getElementById("saveRecordBtn").addEventListener("click", async () => {
+
+            const id = document.getElementById("recordId").value;
+            const sum = document.getElementById("dataSum").value;
+            const userId = document.querySelector('input[name="users"]:checked').value;
+            const categoryId = document.querySelector('input[name="categorys"]:checked').value;
+            if (id === "")
+                await createRecord(sum, userId, categoryId);
+            else
+                await editRecord(id, sum, userId, categoryId);
+            resetRecord();
         });
 
         getUsers();

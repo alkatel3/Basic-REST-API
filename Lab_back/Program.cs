@@ -87,7 +87,6 @@ app.MapDelete("/api/records/{id}", (string id) =>
     return Results.Json(record);
 });
 
-
 app.MapPost("/api/users", (User user) => {
 
     user.Id = Guid.NewGuid().ToString();
@@ -103,6 +102,12 @@ app.MapPost("/api/categories", (Category category) => {
 app.MapPost("/api/records", (Record record) => {
 
     record.Id = Guid.NewGuid().ToString();
+    record.Created = new(DateTime.Now.Year,
+        DateTime.Now.Month,
+        DateTime.Now.Day,
+        DateTime.Now.Hour,
+        DateTime.Now.Minute,
+        DateTime.Now.Second);
     records.Add(record);
     return record;
 });
@@ -127,8 +132,8 @@ app.MapPut("/api/records", (Record recordData) => {
 
     var record = records.FirstOrDefault(u => u.Id == recordData.Id);
     if (record == null) return Results.NotFound(new { message = "Record didn't find" });
-
-    record.Created = recordData.Created;
+    record.UserId = recordData.UserId;
+    record.CategoryId = recordData.CategoryId;
     record.Sum = recordData.Sum;
     return Results.Json(record);
 });
