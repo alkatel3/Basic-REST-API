@@ -11,13 +11,6 @@
         button {
             margin: 5px;
         }
-        /*
-        div{
-            display:inline-block;
-            vertical-align:top;
-            margin-right:100px;
-
-        }*/
         .InlineDiv {
             display: inline-block;
             margin-right: 50px;
@@ -91,8 +84,40 @@
             <button id="GetRecordBtn">Get list</button>
         </p>
         <h4>Records List</h4>
-        <div id="divForTable">
+        <table id="rectab1">
+            <thead><tr><th>DateTime</th><th>Sum</th><th>User</th><th>Category</th><th></th></tr></thead>
+            <tbody id="records2">
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <h2>Get record list by user</h2>
+        <div class="InlineDiv">
+            <h4>Users List</h4>
+            <table>
+                <thead><tr><th></th><th>Name</th><th></th></tr></thead>
+                <tbody id="users3">
+                </tbody>
+            </table>
         </div>
+        <div class="InlineDiv">
+            <h4>Categories List</h4>
+            <table>
+                <thead><tr><th></th><th>Name</th><th></th></tr></thead>
+                <tbody id="categories2">
+                </tbody>
+            </table>
+        </div>
+        <p>
+            <button id="GetRecordBtn2">Get list</button>
+        </p>
+        <h4>Records List</h4>
+        <table id="rectab2">
+            <thead><tr><th>DateTime</th><th>Sum</th><th>User</th><th>Category</th><th></th></tr></thead>
+            <tbody id="records3">
+            </tbody>
+        </table>
     </div>
     <script>
         async function getUsers() {
@@ -104,9 +129,11 @@
                 const users = await response.json();
                 const rows = document.getElementById("users");
                 const rows2 = document.getElementById("users2");
+                const rows3 = document.getElementById("users3");
                 users.forEach(user => {
                     rows.append(UserRow(user, "users1"));
                     rows2.append(UserRow(user, "users2"));
+                    rows3.append(UserRow(user, "users3"));
                 });
             }
         }
@@ -118,7 +145,11 @@
             if (response.ok === true) {
                 const categories = await response.json();
                 const rows = document.getElementById("categories");
-                categories.forEach(category => rows.append(CategoryRow(category)));
+                const rows2 = document.getElementById("categories2");
+                categories.forEach(category => {
+                    rows.append(CategoryRow(category, "categories1"));
+                    rows2.append(CategoryRow(category, "categories2"));
+                });
             }
         }
         async function getRecords() {
@@ -133,14 +164,43 @@
             }
         }
 
-        async function GetRecordByUser(UseriId) {
-            const response = await fetch(`/api/users/${UseriId}`, {
+        async function GetRecordByUser(UserId) {
+            const response = await fetch(`/api/users/${UserId}`, {
                 method: "GET",
                 headers: { "Accept": "application/json" }
             });
             if (response.ok === true) {
                 const records = await response.json();
                 const rows = document.getElementById("records2");
+                records.forEach(record => rows.append(RecordRow(record)));
+            }
+            else {
+                const error = await response.json();
+                console.log(error.message);
+            }
+        }
+
+        async function GetRecordByUserAndCategory(UserId, CategoryId) {
+            const response = await fetch(`/api/users/${UserId}`, {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            });
+            if (response.ok === true) {
+                GetRecordByCategory(CategoryId);
+            }
+            else {
+                const error = await response.json();
+                console.log(error.message);
+            }
+        }
+        async function GetRecordByCategory(CategoryId) {
+            const response = await fetch(`/api/categories/${CategoryId}`, {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            });
+            if (response.ok === true) {
+                const records = await response.json();
+                const rows = document.getElementById("records3");
                 records.forEach(record => rows.append(RecordRow(record)));
             }
             else {
@@ -162,6 +222,7 @@
                 const user = await response.json();
                 document.getElementById("users").append(UserRow(user, "users1"));
                 document.getElementById("users2").append(UserRow(user, "users2"));
+                document.getElementById("users3").append(UserRow(user, "users3"));
             }
             else {
                 const error = await response.json();
@@ -179,7 +240,8 @@
             });
             if (response.ok === true) {
                 const category = await response.json();
-                document.getElementById("categories").append(CategoryRow(category));
+                document.getElementById("categories").append(CategoryRow(category, "categories1"));
+                document.getElementById("categories2").append(CategoryRow(category, "categories2"));
             }
             else {
                 const error = await response.json();
@@ -226,7 +288,7 @@
 
             return tr;
         }
-        function CategoryRow(category) {
+        function CategoryRow(category, groupName) {
 
             const tr = document.createElement("tr");
             tr.setAttribute("data-rowid", category.id);
@@ -235,7 +297,7 @@
             const radioLink = document.createElement("input");
             radioLink.type = "radio";
             radioLink.value = category.id;
-            radioLink.name = "categorys";
+            radioLink.name = groupName;
             checkTd.append(radioLink);
             tr.append(checkTd);
 
@@ -285,7 +347,7 @@
 
             const sum = document.getElementById("dataSum").value;
             const userId = document.querySelector('input[name="users1"]:checked');
-            const categoryId = document.querySelector('input[name="categorys"]:checked');
+            const categoryId = document.querySelector('input[name="categories1"]:checked');
             if (userId != null && categoryId != null) {
                 await createRecord(sum, userId.value, categoryId.value);
                 document.getElementById("dataSum").value = "";
@@ -294,35 +356,11 @@
 
         document.getElementById("GetRecordBtn").addEventListener("click", async () => {
 
-            document.getElementById("rectab").remove();
-
-            const div = document.getElementById("divForTable");
-            const table = document.createElement("table");
-            table.id = "rectab"
-            const thead = document.createElement("thead");
-            const tr = document.createElement("tr");
-            const dataTimeTd = document.createElement("td");
-            dataTimeTd.append("DateTime");
-            tr.append(dataTimeTd);
-            const sumTd = document.createElement("td");
-            sumTd.append("Sum");
-            tr.append(sumTd);
-            const userTd = document.createElement("td");
-            userTd.append("User");
-            tr.append(userTd);
-            const CategoryTd = document.createElement("td");
-            CategoryTd.append("Category");
-            tr.append(CategoryTd);
-            const EmptyTd = document.createElement("td");
-            tr.append(EmptyTd);
-            thead.append(tr);
-            table.append(thead)
-
+            document.getElementById("records2").remove();
+            const table = document.getElementById("rectab1");
             const tbody = document.createElement("tbody");
             tbody.id = "records2";
-            table.append(tbody)
-            table.id="rectab"
-            div.append(table);
+            table.append(tbody);
 
             const userId = document.querySelector('input[name="users2"]:checked');
             if (userId != null) {
@@ -330,15 +368,26 @@
             }
         });
 
+        document.getElementById("GetRecordBtn2").addEventListener("click", async () => {
+
+            document.getElementById("records3").remove();
+            const table = document.getElementById("rectab2");
+            const tbody = document.createElement("tbody");
+            tbody.id = "records3";
+            table.append(tbody);
+
+            const userId = document.querySelector('input[name="users3"]:checked');
+            const caregoryId = document.querySelector('input[name="categories2"]:checked');
+            if (userId != null && caregoryId != null) {
+            await GetRecordByUserAndCategory(userId.value, caregoryId.value);
+            }
+        });
+
+
+        
         getUsers();
         getCategorys();
         getRecords();
     </script>
 </body>
 </html>
-
-<table id="rectab">
-    <thead><tr><th>DateTime</th><th>Sum</th><th>User</th><th>Category</th><th></th></tr></thead>
-    <tbody id="records2">
-    </tbody>
-</table>

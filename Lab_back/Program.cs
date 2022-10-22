@@ -1,4 +1,3 @@
-// начальные данные
 using Lab_back.Entities;
 char UserId = 'A';
 char CategoryId = 'a';
@@ -27,6 +26,8 @@ List<Record> records = new List<Record>
         Created=new DateTime(2022,1,19,18,4,5), Sum=1244.45  }
 };
 
+List<Record> recordsByUser = new List<Record>();
+
 
 
 var builder = WebApplication.CreateBuilder();
@@ -42,9 +43,16 @@ app.MapGet("/api/records", () => records);
 app.MapGet("/api/users/{id}", (string Id) =>
 {
     List<Record> resultRecords = records.FindAll(u => u.UserId.Equals(Id));
-    // если не найден, отправляем статусный код и сообщение об ошибке
     if (resultRecords == null) return Results.NotFound(new { message = "Records didn't find" });
+    recordsByUser.AddRange(resultRecords);
+    return Results.Json(resultRecords);
+});
 
+app.MapGet("/api/categories/{id}", (string id) =>
+{
+    List<Record> resultRecords = recordsByUser.FindAll(u => u.CategoryId.Equals(id));
+    if (resultRecords == null) return Results.NotFound(new { message = "Records didn't find" });
+    recordsByUser = new();
     return Results.Json(resultRecords);
 });
 
