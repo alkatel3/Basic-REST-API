@@ -15,30 +15,45 @@
             display: inline-block;
             margin-right: 50px;
         }
+        .divWithBorder{
+            border-width: 1px;
+            border-style: solid;
+            border-color: black;
+            padding-left:10px;
+        }
     </style>
 </head>
 <body>
-    <div class="InlineDiv">
-        <h2>Creat or change user</h2>
+    <div class="divWithBorder">
+        <h2>Creat user</h2>
         <p>
-            Name:<br />
+            Name: 
             <input id="userName" />
-        </p>
-        <p>
+
+
             <button id="saveUserBtn">Save</button>
         </p>
     </div>
-    <div class="InlineDiv">
-        <h2>Creat or change category</h2>
+    <div class="InlineDiv, divWithBorder">
+        <h2>Creat category</h2>
         <p>
-            Name:<br />
-            <input id="categoryName" />
-        </p>
-        <p>
+            Name: 
+            <input id="categoryName" /> 
             <button id="saveCategoryBtn">Save</button>
         </p>
     </div>
-    <div>
+    <div class="divWithBorder">
+        <button id="getCategoies">Get categories list</button>
+        <div>
+            <h4>Categories List</h4>
+            <table id="cattab">
+                <thead><tr><th>Name</th><th></th></tr></thead>
+                <tbody id="categories1">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="divWithBorder">
         <h2>Creat or change record</h2>
         <div class="InlineDiv">
             <h4>Users List</h4>
@@ -70,7 +85,7 @@
             </tbody>
         </table>
     </div>
-    <div>
+    <div class="divWithBorder">
         <h2>Get record list by user</h2>
         <div class="InlineDiv">
             <h4>Users List</h4>
@@ -91,7 +106,7 @@
         </table>
     </div>
 
-    <div>
+    <div class="divWithBorder">
         <h2>Get record list by user</h2>
         <div class="InlineDiv">
             <h4>Users List</h4>
@@ -137,19 +152,27 @@
                 });
             }
         }
-        async function getCategorys() {
+        async function getCategorys(DoRadioInput) {
             const response = await fetch("/api/categories", {
                 method: "GET",
                 headers: { "Accept": "application/json" }
             });
             if (response.ok === true) {
                 const categories = await response.json();
-                const rows = document.getElementById("categories");
-                const rows2 = document.getElementById("categories2");
-                categories.forEach(category => {
-                    rows.append(CategoryRow(category, "categories1"));
-                    rows2.append(CategoryRow(category, "categories2"));
-                });
+                if (DoRadioInput) {
+                    const rows = document.getElementById("categories");
+                    const rows2 = document.getElementById("categories2");
+                    categories.forEach(category => {
+                        rows.append(CategoryRow(category, "categories1", true));
+                        rows2.append(CategoryRow(category, "categories2", true));
+                    });
+                }
+                else {
+                    const rows = document.getElementById("categories1");
+                    categories.forEach(category => {
+                        rows.append(CategoryRow(category, "-", false));
+                    });
+                }
             }
         }
         async function getRecords() {
@@ -240,8 +263,8 @@
             });
             if (response.ok === true) {
                 const category = await response.json();
-                document.getElementById("categories").append(CategoryRow(category, "categories1"));
-                document.getElementById("categories2").append(CategoryRow(category, "categories2"));
+                document.getElementById("categories").append(CategoryRow(category, "categories1",true));
+                document.getElementById("categories2").append(CategoryRow(category, "categories2",true));
             }
             else {
                 const error = await response.json();
@@ -288,18 +311,19 @@
 
             return tr;
         }
-        function CategoryRow(category, groupName) {
+        function CategoryRow(category, groupName, DoRadioInput) {
 
             const tr = document.createElement("tr");
             tr.setAttribute("data-rowid", category.id);
-
-            const checkTd = document.createElement("td");
-            const radioLink = document.createElement("input");
-            radioLink.type = "radio";
-            radioLink.value = category.id;
-            radioLink.name = groupName;
-            checkTd.append(radioLink);
-            tr.append(checkTd);
+            if (DoRadioInput) {
+                const checkTd = document.createElement("td");
+                const radioLink = document.createElement("input");
+                radioLink.type = "radio";
+                radioLink.value = category.id;
+                radioLink.name = groupName;
+                checkTd.append(radioLink);
+                tr.append(checkTd);
+            }
 
             const nameTd = document.createElement("td");
             nameTd.append(category.name);
@@ -383,10 +407,20 @@
             }
         });
 
+        document.getElementById("getCategoies").addEventListener("click", async () => {
 
-        
+            document.getElementById("categories1").remove();
+            const table = document.getElementById("cattab");
+            const tbody = document.createElement("tbody");
+            tbody.id = "categories1";
+            table.append(tbody);
+
+            await getCategorys(false)
+        });
+
+
         getUsers();
-        getCategorys();
+        getCategorys(true);
         getRecords();
     </script>
 </body>
