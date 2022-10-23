@@ -39,6 +39,7 @@ app.UseStaticFiles();
 app.MapGet("/api/users", () => users);
 app.MapGet("/api/categories", () => categories);
 app.MapGet("/api/records", () => records);
+app.MapGet("/api/record", () => typeof(Record).GetProperties());
 
 app.MapGet("/api/users/{id}", (string Id) =>
 {

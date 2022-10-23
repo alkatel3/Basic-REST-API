@@ -54,7 +54,7 @@
         </div>
     </div>
     <div class="divWithBorder">
-        <h2>Creat or change record</h2>
+        <h2>Creat record</h2>
         <div class="InlineDiv">
             <h4>Users List</h4>
             <table>
@@ -78,12 +78,6 @@
         <p>
             <button id="saveRecordBtn">Save</button>
         </p>
-        <h4>Records List</h4>
-        <table>
-            <thead><tr><th>DateTime</th><th>Sum</th><th>User</th><th>Category</th><th></th></tr></thead>
-            <tbody id="records">
-            </tbody>
-        </table>
     </div>
     <div class="divWithBorder">
         <h2>Get record list by user</h2>
@@ -100,12 +94,11 @@
         </p>
         <h4>Records List</h4>
         <table id="rectab1">
-            <thead><tr><th>DateTime</th><th>Sum</th><th>User</th><th>Category</th><th></th></tr></thead>
+            <thead><tr><th>DateTime</th><th>Sum</th></tr></thead>
             <tbody id="records2">
             </tbody>
         </table>
     </div>
-
     <div class="divWithBorder">
         <h2>Get record list by user</h2>
         <div class="InlineDiv">
@@ -129,7 +122,7 @@
         </p>
         <h4>Records List</h4>
         <table id="rectab2">
-            <thead><tr><th>DateTime</th><th>Sum</th><th>User</th><th>Category</th><th></th></tr></thead>
+            <thead><tr><th>DateTime</th><th>Sum</th></tr></thead>
             <tbody id="records3">
             </tbody>
         </table>
@@ -173,17 +166,6 @@
                         rows.append(CategoryRow(category, "-", false));
                     });
                 }
-            }
-        }
-        async function getRecords() {
-            const response = await fetch("/api/records", {
-                method: "GET",
-                headers: { "Accept": "application/json" }
-            });
-            if (response.ok === true) {
-                const records = await response.json();
-                const rows = document.getElementById("records");
-                records.forEach(record => rows.append(RecordRow(record)));
             }
         }
 
@@ -242,6 +224,7 @@
                 })
             });
             if (response.ok === true) {
+                console.log("User: " + userName + " created");
                 const user = await response.json();
                 document.getElementById("users").append(UserRow(user, "users1"));
                 document.getElementById("users2").append(UserRow(user, "users2"));
@@ -262,6 +245,7 @@
                 })
             });
             if (response.ok === true) {
+                console.log("Category: " + categoryName + " created");
                 const category = await response.json();
                 document.getElementById("categories").append(CategoryRow(category, "categories1",true));
                 document.getElementById("categories2").append(CategoryRow(category, "categories2",true));
@@ -283,8 +267,7 @@
                 })
             });
             if (response.ok === true) {
-                const record = await response.json();
-                document.getElementById("records").append(RecordRow(record));
+                console.log("Record: " + recordSum + " created");
             }
             else {
                 const error = await response.json();
@@ -344,36 +327,32 @@
             sumTd.append(record.sum);
             tr.append(sumTd);
 
-            const UserTd = document.createElement("td");
-            UserTd.append(record.userId);
-            tr.append(UserTd);
-
-            const CategoryTd = document.createElement("td");
-            CategoryTd.append(record.categoryId);
-            tr.append(CategoryTd);
-
             return tr;
         }
 
         document.getElementById("saveUserBtn").addEventListener("click", async () => {
 
             const name = document.getElementById("userName").value;
-            await createUser(name);
-            document.getElementById("userName").value = "";
+            if (name != "") {
+                await createUser(name);
+                document.getElementById("userName").value = "";
+            }
         });
         document.getElementById("saveCategoryBtn").addEventListener("click", async () => {
 
             const name = document.getElementById("categoryName").value;
-            await createCategory(name);
-            document.getElementById("categoryName").value = "";
+            if (name != "") {
+                await createCategory(name);
+                document.getElementById("categoryName").value = "";
+            }
         });
         document.getElementById("saveRecordBtn").addEventListener("click", async () => {
 
-            const sum = document.getElementById("dataSum").value;
+            const sum = document.getElementById("dataSum");
             const userId = document.querySelector('input[name="users1"]:checked');
             const categoryId = document.querySelector('input[name="categories1"]:checked');
-            if (userId != null && categoryId != null) {
-                await createRecord(sum, userId.value, categoryId.value);
+            if (userId != null && categoryId != null && sum.value != "") {
+                await createRecord(sum.value, userId.value, categoryId.value);
                 document.getElementById("dataSum").value = "";
             }
         });
@@ -421,7 +400,6 @@
 
         getUsers();
         getCategorys(true);
-        getRecords();
     </script>
 </body>
 </html>
