@@ -170,7 +170,7 @@
         }
 
         async function GetRecordByUser(UserId) {
-            const response = await fetch(`/api/users/${UserId}`, {
+            const response = await fetch(`/api/GetRecordsByUser/${UserId}`, {
                 method: "GET",
                 headers: { "Accept": "application/json" }
             });
@@ -184,22 +184,8 @@
                 console.log(error.message);
             }
         }
-
-        async function GetRecordByUserAndCategory(UserId, CategoryId) {
-            const response = await fetch(`/api/users/${UserId}`, {
-                method: "GET",
-                headers: { "Accept": "application/json" }
-            });
-            if (response.ok === true) {
-                GetRecordByCategory(CategoryId);
-            }
-            else {
-                const error = await response.json();
-                console.log(error.message);
-            }
-        }
-        async function GetRecordByCategory(CategoryId) {
-            const response = await fetch(`/api/categories/${CategoryId}`, {
+        async function GetRecordByUserAndCategory(userId, categoryId) {
+            const response = await fetch(`/api/GetRecordsByUserAndCategory/${userId}&${categoryId}`, {
                 method: "GET",
                 headers: { "Accept": "application/json" }
             });
@@ -216,7 +202,7 @@
 
         async function createUser(userName) {
 
-            const response = await fetch("api/users", {
+            const response = await fetch("api/CreateUser", {
                 method: "POST",
                 headers: { "Accept": "application/json", "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -237,7 +223,7 @@
         }
         async function createCategory(categoryName) {
 
-            const response = await fetch("api/categories", {
+            const response = await fetch("api/CreateCategory", {
                 method: "POST",
                 headers: { "Accept": "application/json", "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -257,7 +243,7 @@
         }
         async function createRecord(recordSum, userId, categoryId) {
 
-            const response = await fetch("api/records", {
+            const response = await fetch("api/CreateRecord", {
                 method: "POST",
                 headers: { "Accept": "application/json", "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -274,6 +260,23 @@
                 console.log(error.message);
             }
         }
+
+        async function GetRecordByCategory(CategoryId) {
+            const response = await fetch(`/api/categories/${CategoryId}`, {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            });
+            if (response.ok === true) {
+                const records = await response.json();
+                const rows = document.getElementById("records3");
+                records.forEach(record => rows.append(RecordRow(record)));
+            }
+            else {
+                const error = await response.json();
+                console.log(error.message);
+            }
+        }
+
 
         function UserRow(user, groupName) {
 
@@ -356,7 +359,6 @@
                 document.getElementById("dataSum").value = "";
             }
         });
-
         document.getElementById("GetRecordBtn").addEventListener("click", async () => {
 
             document.getElementById("records2").remove();
@@ -370,7 +372,6 @@
                 await GetRecordByUser(userId.value);
             }
         });
-
         document.getElementById("GetRecordBtn2").addEventListener("click", async () => {
 
             document.getElementById("records3").remove();
@@ -385,7 +386,6 @@
             await GetRecordByUserAndCategory(userId.value, caregoryId.value);
             }
         });
-
         document.getElementById("getCategoies").addEventListener("click", async () => {
 
             document.getElementById("categories1").remove();
@@ -396,7 +396,6 @@
 
             await getCategorys(false)
         });
-
 
         getUsers();
         getCategorys(true);

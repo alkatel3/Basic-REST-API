@@ -26,8 +26,6 @@ List<Record> records = new List<Record>
         Created=new DateTime(2022,1,19,18,4,5), Sum=1244.45  }
 };
 
-List<Record> recordsByUser = new List<Record>();
-
 
 
 var builder = WebApplication.CreateBuilder();
@@ -39,38 +37,36 @@ app.UseStaticFiles();
 app.MapGet("/api/users", () => users);
 app.MapGet("/api/categories", () => categories);
 app.MapGet("/api/records", () => records);
-app.MapGet("/api/record", () => typeof(Record).GetProperties());
 
-app.MapGet("/api/users/{id}", (string Id) =>
+app.MapGet("/api/GetRecordsByUser/{id}", (string Id) =>
 {
     List<Record> resultRecords = records.FindAll(u => u.UserId.Equals(Id));
     if (resultRecords == null) return Results.NotFound(new { message = "Records didn't find" });
-    recordsByUser.AddRange(resultRecords);
     return Results.Json(resultRecords);
 });
 
-app.MapGet("/api/categories/{id}", (string id) =>
+app.MapGet("/api/GetRecordsByUserAndCategory/{userId}&{categoryId}", (string userId, string categoryId) =>
 {
-    List<Record> resultRecords = recordsByUser.FindAll(u => u.CategoryId.Equals(id));
-    if (resultRecords == null) return Results.NotFound(new { message = "Records didn't find" });
-    recordsByUser = new();
+    List<Record> resultRecords = records.FindAll(u => u.UserId.Equals(userId));
+    resultRecords = resultRecords.FindAll(u => u.CategoryId.Equals(categoryId));
+    if (resultRecords == null) return Results.NotFound(new { message = $"Records didn't find" });
     return Results.Json(resultRecords);
 });
 
-app.MapPost("/api/users", (User user) => {
+
+app.MapPost("/api/CreateUser", (User user) => {
 
     user.Id = UserId++.ToString();
     users.Add(user);
     return user;
 });
-app.MapPost("/api/categories", (Category category) => {
+app.MapPost("/api/CreateCategory", (Category category) => {
 
     category.Id = CategoryId++.ToString();
     categories.Add(category);
     return category;
 });
-app.MapPost("/api/records", (Record record) => {
-
+app.MapPost("/api/CreateRecord", (Record record) => {
     record.Id = RecordId++.ToString();
     record.Created = new(DateTime.Now.Year,
         DateTime.Now.Month,
@@ -79,7 +75,7 @@ app.MapPost("/api/records", (Record record) => {
         DateTime.Now.Minute,
         DateTime.Now.Second);
     records.Add(record);
-    return record;
+    return Results.Json(record);
 });
 
 app.Run();
