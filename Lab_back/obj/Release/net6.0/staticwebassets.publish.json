@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "Hash": "zMT9P3K5aLh/610ZdRm5O72xWYCvvNqaYKTfvwiD42U=",
+  "Source": "Lab_back",
+  "BasePath": "_content/Lab_back",
+  "Mode": "Default",
+  "ManifestType": "Publish",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "Lab_back\\wwwroot",
+      "Source": "Lab_back",
+      "ContentRoot": "C:\\Users\\Dell\\OneDrive\\Рабочий стол\\Studying\\Back-end\\Нова папка\\Basic-REST-API\\Lab_back\\wwwroot\\",
+      "BasePath": "_content/Lab_back",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\Dell\\OneDrive\\Рабочий стол\\Studying\\Back-end\\Нова папка\\Basic-REST-API\\Lab_back\\wwwroot\\index.html",
+      "SourceId": "Lab_back",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Dell\\OneDrive\\Рабочий стол\\Studying\\Back-end\\Нова папка\\Basic-REST-API\\Lab_back\\wwwroot\\",
+      "BasePath": "_content/Lab_back",
+      "RelativePath": "index.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\index.html"
+    }
+  ]
+}
