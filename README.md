@@ -1,6 +1,8 @@
 # Basic-REST-API
  Basic REST API of an expense accounting application
  
+ Deployed project: https://base-rest-api-20221026203626.azurewebsites.net/
+ 
 ## Installing .NET6.0
 
 **Windows**
