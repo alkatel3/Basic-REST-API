@@ -4,6 +4,7 @@
  Deployed project: https://base-rest-api-20221026203626.azurewebsites.net/
  
  Postmat colection: https://martian-crescent-155697.postman.co/workspace/New-Team-Workspace~17abced1-47a4-41a6-97c4-9e2ae03615c6/collection/23834673-967d534d-eafd-4701-9a36-1d4ab42bc207?action=share&creator=23834673
+ 
  Postman enviroment: https://martian-crescent-155697.postman.co/workspace/New-Team-Workspace~17abced1-47a4-41a6-97c4-9e2ae03615c6/environment/23834673-570c641e-fb52-413c-aaba-3fa224d126bd
  
 ## Installing .NET6.0
