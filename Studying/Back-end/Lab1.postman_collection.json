@@ -1,0 +1,206 @@
+{
+	"info": {
+		"_postman_id": "967d534d-eafd-4701-9a36-1d4ab42bc207",
+		"name": "Lab1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23834673"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Oleg\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{production}}/api/CreateUser",
+					"protocol": "https",
+					"host": [
+						"{{production}}"
+					],
+					"path": [
+						"api",
+						"CreateUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Category",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Pets\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{production}}/api/CreateCategory",
+					"protocol": "https",
+					"host": [
+						"{{production}}"
+					],
+					"path": [
+						"api",
+						"CreateCategory"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Record",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sum\": 1999,\r\n    \"userId\": \"D\",\r\n    \"categoryId\": \"a\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{production}}/api/CreateRecord",
+					"protocol": "https",
+					"host": [
+						"{{production}}"
+					],
+					"path": [
+						"api",
+						"CreateRecord"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Categories",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{production}}/api/categories",
+					"protocol": "https",
+					"host": [
+						"{{production}}"
+					],
+					"path": [
+						"api",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Records by User",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{production}}/api/GetRecordsByUser/D",
+					"protocol": "https",
+					"host": [
+						"{{production}}"
+					],
+					"path": [
+						"api",
+						"GetRecordsByUser",
+						"D"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Records by User and Category",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{production}}/api/GetRecordsByUserAndCategory/D&a",
+					"protocol": "https",
+					"host": [
+						"{{production}}"
+					],
+					"path": [
+						"api",
+						"GetRecordsByUserAndCategory",
+						"D&a"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "domain",
+			"value": "domain"
+		},
+		{
+			"key": "userId",
+			"value": "D"
+		},
+		{
+			"key": "catedoryId",
+			"value": "a"
+		}
+	]
+}

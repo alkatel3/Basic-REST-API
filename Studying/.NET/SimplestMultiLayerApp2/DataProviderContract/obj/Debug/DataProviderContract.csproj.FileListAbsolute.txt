@@ -1,0 +1,6 @@
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\DataProviderContract\bin\Debug\DataProviderContract.dll
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\DataProviderContract\bin\Debug\DataProviderContract.pdb
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\DataProviderContract\obj\Debug\DataProviderContract.csproj.AssemblyReference.cache
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\DataProviderContract\obj\Debug\DataProviderContract.csproj.CoreCompileInputs.cache
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\DataProviderContract\obj\Debug\DataProviderContract.dll
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\DataProviderContract\obj\Debug\DataProviderContract.pdb

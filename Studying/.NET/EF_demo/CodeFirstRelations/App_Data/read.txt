@@ -1,0 +1,10 @@
+Строка соединения может быть двух типов: 
+<add name="BooksDB" connectionString="data source=(localdb)\MSSQLLocalDB;initial catalog=books;Integrated Security=True;" providerName="System.Data.SqlClient" />
+<add name="BooksDB22" connectionString="data source=(localdb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\booksdb.mdf;Integrated Security=True;" providerName="System.Data.SqlClient" />
+
+1) если используется размещение в каталоге сервера - initial catalog=books
+тогда бд books.mdf создается в папке C:\Users\<пользователь>
+, например как у меня - C:\Users\admin
+
+2) если указывается файл бд и его полный путь размещения - AttachDbFilename=|DataDirectory|\booksdb.mdf
+файл создается в папке App_Data проекта или в любой другой, заданной в строке подключения AttachDbFilename

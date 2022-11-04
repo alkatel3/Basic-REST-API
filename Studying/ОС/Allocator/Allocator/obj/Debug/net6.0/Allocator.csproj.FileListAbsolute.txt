@@ -1,0 +1,15 @@
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\ОС\Allocator\Allocator\bin\Debug\net6.0\Allocator.exe
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\ОС\Allocator\Allocator\bin\Debug\net6.0\Allocator.deps.json
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\ОС\Allocator\Allocator\bin\Debug\net6.0\Allocator.runtimeconfig.json
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\ОС\Allocator\Allocator\bin\Debug\net6.0\Allocator.dll
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\ОС\Allocator\Allocator\bin\Debug\net6.0\Allocator.pdb
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\ОС\Allocator\Allocator\obj\Debug\net6.0\Allocator.csproj.AssemblyReference.cache
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\ОС\Allocator\Allocator\obj\Debug\net6.0\Allocator.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\ОС\Allocator\Allocator\obj\Debug\net6.0\Allocator.AssemblyInfoInputs.cache
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\ОС\Allocator\Allocator\obj\Debug\net6.0\Allocator.AssemblyInfo.cs
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\ОС\Allocator\Allocator\obj\Debug\net6.0\Allocator.csproj.CoreCompileInputs.cache
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\ОС\Allocator\Allocator\obj\Debug\net6.0\Allocator.dll
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\ОС\Allocator\Allocator\obj\Debug\net6.0\refint\Allocator.dll
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\ОС\Allocator\Allocator\obj\Debug\net6.0\Allocator.pdb
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\ОС\Allocator\Allocator\obj\Debug\net6.0\Allocator.genruntimeconfig.cache
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\ОС\Allocator\Allocator\obj\Debug\net6.0\ref\Allocator.dll

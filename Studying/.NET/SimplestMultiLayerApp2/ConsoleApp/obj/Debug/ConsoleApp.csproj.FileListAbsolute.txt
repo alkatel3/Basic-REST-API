@@ -1,0 +1,17 @@
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\ConsoleApp\bin\Debug\ConsoleApp.exe.config
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\ConsoleApp\bin\Debug\ConsoleApp.exe
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\ConsoleApp\bin\Debug\ConsoleApp.pdb
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\ConsoleApp\bin\Debug\BLL.dll
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\ConsoleApp\bin\Debug\Ninject.dll
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\ConsoleApp\bin\Debug\DAL.dll
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\ConsoleApp\bin\Debug\DataProviderContract.dll
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\ConsoleApp\bin\Debug\BLL.pdb
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\ConsoleApp\bin\Debug\Ninject.xml
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\ConsoleApp\bin\Debug\DAL.pdb
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\ConsoleApp\bin\Debug\DataProviderContract.pdb
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\ConsoleApp\obj\Debug\ConsoleApp.csproj.AssemblyReference.cache
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\ConsoleApp\obj\Debug\ConsoleApp.csproj.SuggestedBindingRedirects.cache
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\ConsoleApp\obj\Debug\ConsoleApp.csproj.CoreCompileInputs.cache
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\ConsoleApp\obj\Debug\ConsoleApp.csproj.CopyComplete
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\ConsoleApp\obj\Debug\ConsoleApp.exe
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\ConsoleApp\obj\Debug\ConsoleApp.pdb

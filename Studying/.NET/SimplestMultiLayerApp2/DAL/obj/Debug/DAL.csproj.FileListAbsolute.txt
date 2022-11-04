@@ -1,0 +1,11 @@
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\DAL\bin\Debug\DAL.dll
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\DAL\bin\Debug\DAL.pdb
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\DAL\bin\Debug\DataProviderContract.dll
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\DAL\bin\Debug\Ninject.dll
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\DAL\bin\Debug\DataProviderContract.pdb
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\DAL\bin\Debug\Ninject.xml
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\DAL\obj\Debug\DAL.csproj.AssemblyReference.cache
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\DAL\obj\Debug\DAL.csproj.CopyComplete
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\DAL\obj\Debug\DAL.dll
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\SimplestMultiLayerApp2\DAL\obj\Debug\DAL.pdb
